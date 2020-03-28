@@ -1,9 +1,5 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -12,7 +8,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String sequencial;
 
     @Column(unique = true, nullable = false)
@@ -21,6 +17,12 @@ public class Produto {
     @Column(nullable = false)
     private String descricao;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    private Item item;
+
+    @ManyToOne
+    private Estoque estoque;
 
     public Integer getId() {
         return id;

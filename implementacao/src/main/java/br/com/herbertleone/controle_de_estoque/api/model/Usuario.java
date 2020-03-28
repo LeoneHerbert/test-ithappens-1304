@@ -1,9 +1,6 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 public class Usuario {
     @Id
@@ -12,6 +9,10 @@ public class Usuario {
 
     @Column(nullable = false)
     private String nome;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pedidoestoque_id", referencedColumnName = "id")
+    private PedidoEstoque pedidoUsuario;
 
     public Integer getId() {
         return id;

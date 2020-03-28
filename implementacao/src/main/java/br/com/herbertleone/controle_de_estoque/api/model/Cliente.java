@@ -1,16 +1,7 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.util.*;
+import javax.persistence.*;
 
 @Entity
 public class Cliente {
@@ -22,6 +13,10 @@ public class Cliente {
 
     @Column(unique = true, nullable = false)
     private String cpf;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pedidoestoque_id", referencedColumnName = "id")
+    private PedidoEstoque pedidoCliente;
 
     public Integer getId() {
         return id;
