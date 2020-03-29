@@ -1,6 +1,10 @@
 package br.com.herbertleone.controle_de_estoque.api.controller;
 
+import br.com.herbertleone.controle_de_estoque.api.controller.dto.UsuarioDTO;
 import br.com.herbertleone.controle_de_estoque.api.controller.event.HeaderLocationEvento;
+import br.com.herbertleone.controle_de_estoque.api.controller.response.Erro;
+import br.com.herbertleone.controle_de_estoque.api.controller.response.Resposta;
+import br.com.herbertleone.controle_de_estoque.api.controller.validation.Validacao;
 import br.com.herbertleone.controle_de_estoque.api.model.Usuario;
 import br.com.herbertleone.controle_de_estoque.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -53,8 +58,24 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualiza(@PathVariable Integer id, @Validated @RequestBody Usuario usuario) {
-        Usuario usuarioManager = usuarioService.atualiza(usuario, id );
-        return ResponseEntity.ok(usuarioManager );
+    public ResponseEntity<Resposta<Usuario>> atualiza(@PathVariable Integer id, @Validated @RequestBody UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioDTO.atualizaIgnorandoNuloA(usuarioService.buscaPor(id));
+
+        List<Erro> erros = this.getErros(new UsuarioDTO(usuario) );
+        if (existe(erros)) {
+            return ResponseEntity.badRequest().body(Resposta.com(erros) );
+        }
+
+        Usuario usuarioAtualizado = usuarioService.atualiza(usuario, id);
+        return ResponseEntity.ok(Resposta.comDadosDe(new UsuarioDTO(usuarioAtualizado )));
+    }
+
+    private boolean existe(List<Erro> erros) {
+        return Objects.nonNull( erros ) &&  !erros.isEmpty();
+    }
+
+    private List<Erro> getErros(UsuarioDTO dto) {
+        Validacao<UsuarioDTO> validacao = new Validacao<>();
+        return validacao.valida(dto);
     }
 }

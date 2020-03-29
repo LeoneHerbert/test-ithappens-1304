@@ -1,21 +1,24 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
+import br.com.herbertleone.controle_de_estoque.api.model.enums.FormaDePagamento;
 import br.com.herbertleone.controle_de_estoque.api.model.enums.TipoDoPedido;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "pedido_estoque")
 public class PedidoEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "pedidoFilial")
+    @OneToOne(mappedBy = "pedidoFilial", cascade = CascadeType.ALL)
     private Filial filial;
 
-    @OneToOne(mappedBy = "pedidoUsuario")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "pedidoCliente")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
     @Column(nullable = false)
@@ -24,6 +27,10 @@ public class PedidoEstoque {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoDoPedido tipoDoPedido;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FormaDePagamento formaDePagamento;
 
     public Integer getId() {
         return id;
@@ -71,5 +78,13 @@ public class PedidoEstoque {
 
     public void setTipoDoPedido(TipoDoPedido tipoDoPedido) {
         this.tipoDoPedido = tipoDoPedido;
+    }
+
+    public FormaDePagamento getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(FormaDePagamento formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
     }
 }

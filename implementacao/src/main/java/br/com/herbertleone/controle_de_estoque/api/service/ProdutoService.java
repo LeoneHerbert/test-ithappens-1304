@@ -31,6 +31,7 @@ public class ProdutoService {
         return this.genericoService.buscaPor(id );
     }
 
+
     @Transactional(readOnly = true)
     public List<Produto> todos() {
         return genericoService.todos();

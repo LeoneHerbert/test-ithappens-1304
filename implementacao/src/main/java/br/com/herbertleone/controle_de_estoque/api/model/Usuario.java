@@ -1,18 +1,42 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import javax.persistence.*;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @Column
     private String nome;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedidoestoque_id", referencedColumnName = "id")
-    private PedidoEstoque pedidoUsuario;
+    @NotEmpty
+    @Column(unique = true)
+    private String login;
+
+    @NotEmpty
+    @Column
+    private String senha;
+
+    @NotEmpty
+    @CPF
+    @Column(unique = true)
+    private String cpf;
+
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PedidoEstoque> pedidosUsuario = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -28,5 +52,29 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<PedidoEstoque> getPedidosUsuario() {
+        return pedidosUsuario;
+    }
+
+    public void setPedidosUsuario(Set<PedidoEstoque> pedidosUsuario) {
+        this.pedidosUsuario = pedidosUsuario;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

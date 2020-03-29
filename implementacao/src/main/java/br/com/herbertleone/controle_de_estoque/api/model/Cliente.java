@@ -1,22 +1,32 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "cliente")
 public class Cliente {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @Column
     private String nome;
 
-    @Column(unique = true, nullable = false)
+    @NotEmpty
+    @CPF
+    @Column(unique = true)
     private String cpf;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedidoestoque_id", referencedColumnName = "id")
-    private PedidoEstoque pedidoCliente;
+    @OneToMany(
+            mappedBy = "cliente",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PedidoEstoque> pedidosCliente = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -41,5 +51,13 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<PedidoEstoque> getPedidosCliente() {
+        return pedidosCliente;
+    }
+
+    public void setPedidosCliente(Set<PedidoEstoque> pedidosCliente) {
+        this.pedidosCliente = pedidosCliente;
     }
 }

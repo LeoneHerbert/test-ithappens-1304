@@ -34,11 +34,6 @@ public class EstoqueService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Estoque> buscaPor(String nome) {
-        return Optional.ofNullable( estoqueRepository.findByNome(nome ) );
-    }
-
-    @Transactional(readOnly = true)
     public List<Estoque> todos() {
         return genericoService.todos();
     }

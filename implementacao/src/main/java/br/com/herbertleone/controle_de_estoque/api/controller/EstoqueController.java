@@ -1,6 +1,10 @@
 package br.com.herbertleone.controle_de_estoque.api.controller;
 
+import br.com.herbertleone.controle_de_estoque.api.controller.dto.EstoqueDTO;
 import br.com.herbertleone.controle_de_estoque.api.controller.event.HeaderLocationEvento;
+import br.com.herbertleone.controle_de_estoque.api.controller.response.Erro;
+import br.com.herbertleone.controle_de_estoque.api.controller.response.Resposta;
+import br.com.herbertleone.controle_de_estoque.api.controller.validation.Validacao;
 import br.com.herbertleone.controle_de_estoque.api.model.Estoque;
 import br.com.herbertleone.controle_de_estoque.api.service.EstoqueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -47,15 +51,26 @@ public class EstoqueController {
         return estoqueService.buscaPor(id );
     }
 
-    @GetMapping("/{nome}")
-    public Optional<Estoque> buscaPor(@PathVariable String nome) {
-        return estoqueService.buscaPor(nome );
+    @PutMapping("/{id}")
+    public ResponseEntity<Resposta<Estoque>> atualiza(@PathVariable Integer id, @Validated @RequestBody EstoqueDTO estoqueDTO ) {
+        Estoque estoque = estoqueDTO.atualizaIgnorandoNuloA(estoqueService.buscaPor(id));
+
+        List<Erro> erros = this.getErros(new EstoqueDTO(estoque) );
+        if (existe(erros)) {
+            return ResponseEntity.badRequest().body(Resposta.com(erros) );
+        }
+
+        Estoque estoqueAtualizado = estoqueService.atualiza(estoque, id);
+        return ResponseEntity.ok(Resposta.comDadosDe(new EstoqueDTO(estoqueAtualizado )));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Estoque> atualiza(@PathVariable Integer id, @Validated @RequestBody Estoque estoque ) {
-        Estoque estoqueManager = estoqueService.atualiza(estoque, id );
-        return ResponseEntity.ok(estoqueManager );
+    private boolean existe(List<Erro> erros) {
+        return Objects.nonNull( erros ) &&  !erros.isEmpty();
+    }
+
+    private List<Erro> getErros(EstoqueDTO dto) {
+        Validacao<EstoqueDTO> validacao = new Validacao<>();
+        return validacao.valida(dto);
     }
 
 }

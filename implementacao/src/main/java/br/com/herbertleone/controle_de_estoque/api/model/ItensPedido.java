@@ -1,29 +1,26 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import br.com.herbertleone.controle_de_estoque.api.model.enums.FormaDePagamento;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "itens_pedido")
 public class ItensPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToMany(
-            mappedBy = "pedido",
+            mappedBy = "itensPedido",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private Set<Item> itens = new LinkedHashSet<>();
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private FormaDePagamento formaDePagamento;
-
-    @Column(nullable = false)
-    private double valorTotal;
+    private BigDecimal valorTotalPedido;
 
     public Integer getId() {
         return id;
@@ -31,5 +28,21 @@ public class ItensPedido {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Set<Item> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<Item> itens) {
+        this.itens = itens;
+    }
+
+    public BigDecimal getValorTotalPedido() {
+        return valorTotalPedido;
+    }
+
+    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
+        this.valorTotalPedido = valorTotalPedido;
     }
 }
