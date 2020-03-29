@@ -5,25 +5,21 @@ import br.com.herbertleone.controle_de_estoque.api.model.enums.StatusItem;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item implements CalculoValorTotal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotEmpty
-    @Column
-    private String nome;
 
     @NotNull
     @Min(0)
     @Column
     private Integer quantidade;
 
+    @NotNull
     @Column(nullable = false)
     private BigDecimal valorUnitario;
 
@@ -88,13 +84,5 @@ public class Item {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 }

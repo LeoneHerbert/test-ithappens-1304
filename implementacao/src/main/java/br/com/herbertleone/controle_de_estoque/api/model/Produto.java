@@ -25,7 +25,7 @@ public class Produto {
     private Integer codigoDeBarras;
 
     @NotEmpty
-    @Column
+    @Column(unique = true)
     private String descricao;
 
     @OneToOne(cascade = CascadeType.ALL)

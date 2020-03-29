@@ -38,6 +38,9 @@ public class Usuario {
     )
     private Set<PedidoEstoque> pedidosUsuario = new LinkedHashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Filial filial;
+
     public Integer getId() {
         return id;
     }
@@ -76,5 +79,21 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Filial getFilial() {
+        return filial;
+    }
+
+    public void setFilial(Filial filial) {
+        this.filial = filial;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "itens_pedido")
-public class ItensPedido {
+public class ItensPedido implements CalculoValorTotal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,8 +19,8 @@ public class ItensPedido {
     )
     private Set<Item> itens = new LinkedHashSet<>();
 
-    @Column(nullable = false)
-    private BigDecimal valorTotalDoPedido;
+    @OneToOne(mappedBy = "itensPedido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PedidoEstoque pedidoEstoque;
 
     public Integer getId() {
         return id;
@@ -38,11 +38,10 @@ public class ItensPedido {
         this.itens = itens;
     }
 
-    public BigDecimal getValorTotalDoPedido() {
-        return valorTotalDoPedido;
-    }
-
-    public void setValorTotalDoPedido(BigDecimal valorTotalDoPedido) {
-        this.valorTotalDoPedido = valorTotalDoPedido;
+    @Override
+    public BigDecimal valorTotal(){
+        return itens.stream()
+                .map(Item::getValorUnitario)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

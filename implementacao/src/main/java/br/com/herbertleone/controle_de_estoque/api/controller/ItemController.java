@@ -53,11 +53,6 @@ public class ItemController {
         return Resposta.comDadosDe(new ItemDTO(item));
     }
 
-    @GetMapping("/{nome}")
-    public Optional<Item> buscaPor(@PathVariable String nome) {
-        return itemService.buscaPor(nome);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Resposta<ItemDTO>> atualiza(@PathVariable Integer id, @Validated @RequestBody ItemDTO itemDTO) {
         Item item = itemDTO.atualizaIgnorandoNuloA(itemService.buscaPor(id));

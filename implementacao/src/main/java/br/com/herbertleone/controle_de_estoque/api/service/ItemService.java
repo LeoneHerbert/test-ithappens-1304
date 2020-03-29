@@ -33,11 +33,6 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Item> buscaPor(String nome) {
-        return Optional.ofNullable( itemRepository.findByNome(nome ) );
-    }
-
-    @Transactional(readOnly = true)
     public List<Item> todos() {
         return genericoService.todos();
     }

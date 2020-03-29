@@ -22,6 +22,13 @@ public class Filial {
     )
     private Set<PedidoEstoque> pedidosFilial = new LinkedHashSet<>();
 
+    @OneToMany(
+            mappedBy = "filial",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Usuario> usuariosDaFilial = new LinkedHashSet<>();
+
     @OneToOne(mappedBy = "filial", cascade = CascadeType.ALL)
     private Estoque estoque;
 
@@ -59,6 +66,14 @@ public class Filial {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Usuario> getUsuariosDaFilial() {
+        return usuariosDaFilial;
+    }
+
+    public void setUsuariosDaFilial(Set<Usuario> usuariosDaFilial) {
+        this.usuariosDaFilial = usuariosDaFilial;
     }
 
     public Set<PedidoEstoque> getPedidosFilial() {

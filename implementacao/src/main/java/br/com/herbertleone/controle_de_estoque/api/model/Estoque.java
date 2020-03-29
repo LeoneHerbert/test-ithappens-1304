@@ -19,6 +19,9 @@ public class Estoque {
     @OneToMany(mappedBy = "estoque", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Item> itens = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "estoque", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PedidoEstoque> pedidosEstoque = new LinkedHashSet<>();
+
     public Integer getId() {
         return id;
     }
@@ -47,5 +50,13 @@ public class Estoque {
 
     public void setItens(Set<Item> itens) {
         this.itens = itens;
+    }
+
+    public Set<PedidoEstoque> getPedidosEstoque() {
+        return pedidosEstoque;
+    }
+
+    public void setPedidosEstoque(Set<PedidoEstoque> pedidosEstoque) {
+        this.pedidosEstoque = pedidosEstoque;
     }
 }
