@@ -20,7 +20,7 @@ public class ItensPedido {
     private Set<Item> itens = new LinkedHashSet<>();
 
     @Column(nullable = false)
-    private BigDecimal valorTotalPedido;
+    private BigDecimal valorTotalDoPedido;
 
     public Integer getId() {
         return id;
@@ -38,11 +38,11 @@ public class ItensPedido {
         this.itens = itens;
     }
 
-    public BigDecimal getValorTotalPedido() {
-        return valorTotalPedido;
+    public BigDecimal getValorTotalDoPedido() {
+        return valorTotalDoPedido;
     }
 
-    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
-        this.valorTotalPedido = valorTotalPedido;
+    public void setValorTotalDoPedido(BigDecimal valorTotalDoPedido) {
+        this.valorTotalDoPedido = valorTotalDoPedido;
     }
 }

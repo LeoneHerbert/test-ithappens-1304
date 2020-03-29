@@ -21,8 +21,8 @@ public class ProdutoDTO {
 
     public ProdutoDTO() {  }
 
-    public ProdutoDTO(Produto categoria) {
-        this.comDadosDe(categoria );
+    public ProdutoDTO(Produto produto) {
+        this.comDadosDe(produto );
     }
 
     public Integer getId() {
@@ -55,12 +55,12 @@ public class ProdutoDTO {
         return dto.getEntity(new Produto() );
     }
 
-    public ProdutoDTO comDadosDe(Produto categoria) {
-        return dto.comDadosDe(categoria );
+    public ProdutoDTO comDadosDe(Produto produto) {
+        return dto.comDadosDe(produto );
     }
 
-    public Produto atualizaIgnorandoNuloA(Produto categoria) {
-        return dto.mergeIgnorandoNulo(categoria );
+    public Produto atualizaIgnorandoNuloA(Produto produto) {
+        return dto.mergeIgnorandoNulo(produto );
     }
 
 

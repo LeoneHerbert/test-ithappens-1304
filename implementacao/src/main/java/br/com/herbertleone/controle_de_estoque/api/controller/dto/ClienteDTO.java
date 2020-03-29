@@ -2,9 +2,11 @@ package br.com.herbertleone.controle_de_estoque.api.controller.dto;
 
 import br.com.herbertleone.controle_de_estoque.api.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ClienteDTO {
     private Integer id;
@@ -17,12 +19,15 @@ public class ClienteDTO {
     @Size(min = 11, max = 11)
     private String cpf;
 
+    @JsonProperty("itenspedido")
+    private Set<ItensPedidoDTO> itensPedidoDTO = new LinkedHashSet<>();
+
     private DTO<Cliente, ClienteDTO> dto = new DTO<>(this);
 
     public ClienteDTO() {  }
 
-    public ClienteDTO(Cliente categoria) {
-        this.comDadosDe(categoria );
+    public ClienteDTO(Cliente cliente) {
+        this.comDadosDe(cliente );
     }
 
     public Integer getId() {
@@ -55,12 +60,12 @@ public class ClienteDTO {
         return dto.getEntity(new Cliente() );
     }
 
-    public ClienteDTO comDadosDe(Cliente categoria) {
-        return dto.comDadosDe(categoria );
+    public ClienteDTO comDadosDe(Cliente cliente) {
+        return dto.comDadosDe(cliente );
     }
 
-    public Cliente atualizaIgnorandoNuloA(Cliente categoria) {
-        return dto.mergeIgnorandoNulo(categoria );
+    public Cliente atualizaIgnorandoNuloA(Cliente cliente) {
+        return dto.mergeIgnorandoNulo(cliente );
     }
 
 
@@ -71,5 +76,13 @@ public class ClienteDTO {
                 ", nome='" + nome + '\'' +
                 ", CPF='" + cpf + '\'' +
                 '}';
+    }
+
+    public Set<ItensPedidoDTO> getItensPedidoDTO() {
+        return itensPedidoDTO;
+    }
+
+    public void setItensPedidoDTO(Set<ItensPedidoDTO> itensPedidoDTO) {
+        this.itensPedidoDTO = itensPedidoDTO;
     }
 }

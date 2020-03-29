@@ -21,8 +21,8 @@ public class UsuarioDTO {
 
     public UsuarioDTO() {  }
 
-    public UsuarioDTO(Usuario categoria) {
-        this.comDadosDe(categoria );
+    public UsuarioDTO(Usuario usuario) {
+        this.comDadosDe(usuario );
     }
 
     public Integer getId() {
@@ -55,12 +55,12 @@ public class UsuarioDTO {
         return dto.getEntity(new Usuario() );
     }
 
-    public UsuarioDTO comDadosDe(Usuario categoria) {
-        return dto.comDadosDe(categoria );
+    public UsuarioDTO comDadosDe(Usuario usuario) {
+        return dto.comDadosDe(usuario );
     }
 
-    public Usuario atualizaIgnorandoNuloA(Usuario categoria) {
-        return dto.mergeIgnorandoNulo(categoria );
+    public Usuario atualizaIgnorandoNuloA(Usuario usuario) {
+        return dto.mergeIgnorandoNulo(usuario );
     }
 
 

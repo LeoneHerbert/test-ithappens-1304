@@ -21,8 +21,8 @@ public class PedidoEstoqueDTO {
 
     public PedidoEstoqueDTO() {  }
 
-    public PedidoEstoqueDTO(PedidoEstoque categoria) {
-        this.comDadosDe(categoria );
+    public PedidoEstoqueDTO(PedidoEstoque pedidoEstoque) {
+        this.comDadosDe(pedidoEstoque );
     }
 
     public Integer getId() {
@@ -55,12 +55,12 @@ public class PedidoEstoqueDTO {
         return dto.getEntity(new PedidoEstoque() );
     }
 
-    public PedidoEstoqueDTO comDadosDe(PedidoEstoque categoria) {
-        return dto.comDadosDe(categoria );
+    public PedidoEstoqueDTO comDadosDe(PedidoEstoque pedidoEstoque) {
+        return dto.comDadosDe(pedidoEstoque );
     }
 
-    public PedidoEstoque atualizaIgnorandoNuloA(PedidoEstoque categoria) {
-        return dto.mergeIgnorandoNulo(categoria );
+    public PedidoEstoque atualizaIgnorandoNuloA(PedidoEstoque pedidoEstoque) {
+        return dto.mergeIgnorandoNulo(pedidoEstoque );
     }
 
 

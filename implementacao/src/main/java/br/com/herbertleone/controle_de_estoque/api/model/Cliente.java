@@ -1,7 +1,6 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
 import org.hibernate.validator.constraints.br.CPF;
-
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

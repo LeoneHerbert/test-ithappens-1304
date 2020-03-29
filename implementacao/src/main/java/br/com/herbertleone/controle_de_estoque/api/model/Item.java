@@ -5,6 +5,7 @@ import br.com.herbertleone.controle_de_estoque.api.model.enums.StatusItem;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -13,6 +14,10 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty
+    @Column
+    private String nome;
 
     @NotNull
     @Min(0)
@@ -83,5 +88,13 @@ public class Item {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

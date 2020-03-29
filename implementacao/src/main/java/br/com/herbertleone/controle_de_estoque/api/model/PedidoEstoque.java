@@ -12,7 +12,7 @@ public class PedidoEstoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "pedidoFilial", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Filial filial;
 
     @ManyToOne(fetch = FetchType.LAZY)

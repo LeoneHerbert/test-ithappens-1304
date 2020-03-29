@@ -2,6 +2,8 @@ package br.com.herbertleone.controle_de_estoque.api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "filial")
@@ -13,9 +15,12 @@ public class Filial {
     @Column
     private String nome;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedido_estoque_id", referencedColumnName = "id")
-    private PedidoEstoque pedidoFilial;
+    @OneToMany(
+            mappedBy = "filial",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<PedidoEstoque> pedidosFilial = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "filial", cascade = CascadeType.ALL)
     private Estoque estoque;
@@ -31,13 +36,6 @@ public class Filial {
         this.id = id;
     }
 
-    public PedidoEstoque getPedidoFilial() {
-        return pedidoFilial;
-    }
-
-    public void setPedidoFilial(PedidoEstoque pedidoFilial) {
-        this.pedidoFilial = pedidoFilial;
-    }
 
     public Estoque getEstoque() {
         return estoque;
@@ -61,5 +59,13 @@ public class Filial {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<PedidoEstoque> getPedidosFilial() {
+        return pedidosFilial;
+    }
+
+    public void setPedidosFilial(Set<PedidoEstoque> pedidosFilial) {
+        this.pedidosFilial = pedidosFilial;
     }
 }
