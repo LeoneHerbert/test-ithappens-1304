@@ -8,37 +8,13 @@ import javax.validation.constraints.Positive;
 @Entity
 @Table(name = "estoque")
 public class Estoque {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @OneToOne
-    @MapsId
-    private Filial filial;
+    @EmbeddedId
+    private EstoquePk id = new EstoquePk();
 
     @NotNull
     @Min(0)
-    @Column(name = "quantidade_estoque")
+    @Column(name = "quantidade_produtos")
     private Integer quantidadeProdutos;
-
-    @ManyToOne
-    private Produto produto;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
-    public Filial getFilial() {
-        return filial;
-    }
-
-    public void setFilial(Filial filial) {
-        this.filial = filial;
-    }
 
     public Integer getQuantidadeProdutos() {
         return quantidadeProdutos;
@@ -48,23 +24,37 @@ public class Estoque {
         this.quantidadeProdutos = quantidadeProdutos;
     }
 
-    public void baixaEstoque(@Positive Integer quantidade)  {
-        final int novaQuantidade = this.getQuantidadeProdutos() - quantidade;
+    public Produto getProduto() {
+        return id.getProduto();
+    }
 
-        if (novaQuantidade < 0) {
-            throw new IllegalArgumentException
-                    ("Não há disponibilidade no estoque de "
-                            + quantidade + " itens do produto " + produto.getNome() + "."
-                            + "Temos disponível apenas " + this.quantidadeProdutos + "itens" );
-        }
-        this.setQuantidadeProdutos(novaQuantidade );
+    public void setProduto(Produto produto) {
+        id.setProduto(produto);
+    }
+
+    public Filial getFilial() {
+        return id.getFilial();
+    }
+
+    public void setFilial(Filial filial) {
+        id.setFilial(filial);
     }
 
     public void adicionaEstoque(@Min(1) Integer quantidade) {
         this.setQuantidadeProdutos(this.getQuantidadeProdutos() + quantidade);
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void baixaEstoque(@Positive Integer quantidade)  {
+        final int novaQuantidade = this.getQuantidadeProdutos() - quantidade;
+
+        if (novaQuantidade < 0) {
+            throw new IllegalArgumentException
+                    ("Não há disponibilidade no estoque de "
+                            + quantidade + " itens do produto " + id.getProduto().getNome() + "."
+                            + "Temos disponível apenas " + this.quantidadeProdutos + "itens" );
+        }
+        this.setQuantidadeProdutos(novaQuantidade );
     }
+
+
 }

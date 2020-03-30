@@ -30,7 +30,7 @@ public class Produto {
 
     @NotNull
     @Column
-    private BigDecimal valorUnitario;
+    private BigDecimal valorUnitarioProduto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Estoque estoque;
@@ -96,11 +96,11 @@ public class Produto {
         this.itensPedido = itensPedido;
     }
 
-    public BigDecimal getValorUnitario() {
-        return valorUnitario;
+    public BigDecimal getValorUnitarioProduto() {
+        return valorUnitarioProduto;
     }
 
-    public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorUnitario = valorUnitario;
+    public void setValorUnitarioProduto(BigDecimal valorUnitarioProduto) {
+        this.valorUnitarioProduto = valorUnitarioProduto;
     }
 }

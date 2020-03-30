@@ -7,8 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "itens_pedido")
@@ -18,6 +16,7 @@ public class ItensPedido implements CalculoValorTotal {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     @NotNull
@@ -32,9 +31,20 @@ public class ItensPedido implements CalculoValorTotal {
     @ManyToOne(fetch = FetchType.LAZY)
     private PedidoEstoque pedidoEstoque;
 
+    @NotNull
+    @Column
+    private BigDecimal valorUnitarioItem;
+
+    @PrePersist
+    private void prePersist() {
+        this.valorUnitarioItem = produto.getValorUnitarioProduto();
+    }
+
+    @Transient
+    @JsonIgnore
     public BigDecimal valorTotal(){
         BigDecimal valor = new BigDecimal(quantidade);
-        return produto.getValorUnitario().multiply(valor);
+        return valorUnitarioItem.multiply(valor);
     }
 
     public Integer getId() {
@@ -51,5 +61,33 @@ public class ItensPedido implements CalculoValorTotal {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public StatusItem getStatusItem() {
+        return statusItem;
+    }
+
+    public void setStatusItem(StatusItem statusItem) {
+        this.statusItem = statusItem;
+    }
+
+    public PedidoEstoque getPedidoEstoque() {
+        return pedidoEstoque;
+    }
+
+    public void setPedidoEstoque(PedidoEstoque pedidoEstoque) {
+        this.pedidoEstoque = pedidoEstoque;
+    }
+
+    public void setValorUnitarioItem(BigDecimal valorUnitarioItem) {
+        this.valorUnitarioItem = valorUnitarioItem;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

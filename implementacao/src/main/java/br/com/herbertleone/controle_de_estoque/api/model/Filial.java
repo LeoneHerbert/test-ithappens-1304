@@ -8,7 +8,8 @@ import java.util.Set;
 @Entity
 @Table(name = "filial")
 public class Filial {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty
@@ -35,7 +36,6 @@ public class Filial {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public Estoque getEstoque() {
         return estoque;
