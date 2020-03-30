@@ -1,8 +1,8 @@
 CREATE TABLE pedido_estoque (
         id int(11) NOT NULL AUTO_INCREMENT,
-        forma_de_pagamento varchar(255) NOT NULL,
-        observacao_entrega varchar(255) NOT NULL,
-        tipo_do_pedido varchar(255) NOT NULL,
+        forma_de_pagamento varchar(20) NOT NULL,
+        observacao_entrega varchar(100) NOT NULL,
+        tipo_do_pedido varchar(7) NOT NULL,
         filial_id INT,
         cliente_id INT,
         usuario_id INT,

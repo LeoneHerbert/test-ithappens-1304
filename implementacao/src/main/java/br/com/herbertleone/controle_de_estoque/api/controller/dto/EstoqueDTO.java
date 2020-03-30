@@ -10,7 +10,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class EstoqueDTO {
-    private Integer id;
 
     @NotNull
     @Size(min = 2, max = 50)
@@ -19,7 +18,7 @@ public class EstoqueDTO {
     @JsonProperty("filial")
     private FilialDTO filialDTO;
 
-    @JsonProperty("item")
+    @JsonProperty("produto")
     private Set<ProdutoDTO> produtosDTO = new LinkedHashSet<>();
 
     private DTO<Estoque, EstoqueDTO> dto = new DTO<>(this);
@@ -28,14 +27,6 @@ public class EstoqueDTO {
 
     public EstoqueDTO(Estoque estoque) {
         this.comDadosDe(estoque );
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -67,18 +58,17 @@ public class EstoqueDTO {
         this.filialDTO = filialDTO;
     }
 
-    public Set<ProdutoDTO> getItemDTO() {
+    public Set<ProdutoDTO> getProdutosDTO() {
         return produtosDTO;
     }
 
-    public void setItemDTO(Set<ProdutoDTO> itemDTO) {
-        this.produtosDTO = itemDTO;
+    public void setProdutosDTO(Set<ProdutoDTO> produtosDTO) {
+        this.produtosDTO = produtosDTO;
     }
 
     @Override
     public String toString() {
         return "EstoqueDTO{" +
-                "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", produtos='" + produtosDTO.toString() + '\'' +
                 '}';
