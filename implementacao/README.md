@@ -1,5 +1,8 @@
 ## SEU CÓDIGO DE IMPLEMENTAÇÃO AQUI NESTE DIRETÓRIO
 
-```java
-  System.out.println("Se preferir pode editar este arquivo!");
-```
+Para testar as requisições, recomendo o postman.
+
+Para a utilização da migração do banco de dados, basta alterar no arquivo "application.properties" os seguintes campos:
+spring.datasource.username=
+spring.datasource.password=
+Inserindo as suas informações cadastradas no MySQL.
