@@ -27,7 +27,7 @@ public class ItensPedido {
     @Column
     private BigDecimal valorUnitarioItem;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
@@ -69,10 +69,6 @@ public class ItensPedido {
 
     public void setStatusItem(StatusItem statusItem) {
         this.statusItem = statusItem;
-    }
-
-    public PedidoEstoque getPedidoEstoque() {
-        return pedidoEstoque;
     }
 
     public void setPedidoEstoque(PedidoEstoque pedidoEstoque) {

@@ -10,3 +10,6 @@ CREATE TABLE endereco (
   FOREIGN KEY(filial_id) REFERENCES filial(id),
   PRIMARY KEY (id, filial_id)
 ) engine=InnoDB DEFAULT CHARSET=utf8;
+
+insert into endereco(filial_id, cep, cidade, complemento, logradouro, numero, uf) values (1, "65074115", "São Luís", "Cohama", "Av. Daniel de la Touche","73A", "MA");
+insert into endereco(filial_id, cep, cidade, complemento, logradouro, numero, uf) values (60, "65053550", "São José de Ribamar", "Cohatrac I", "Av. Contorno Sul, Quadra 6","23", "MA");

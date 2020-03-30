@@ -53,16 +53,8 @@ public class Filial {
         this.nome = nome;
     }
 
-    public Set<PedidoEstoque> getPedidosFilial() {
-        return pedidosFilial;
-    }
-
     public void setPedidosFilial(Set<PedidoEstoque> pedidosFilial) {
         this.pedidosFilial = pedidosFilial;
-    }
-
-    public Set<Estoque> getEstoque() {
-        return estoque;
     }
 
     public void setEstoque(Set<Estoque> estoque) {

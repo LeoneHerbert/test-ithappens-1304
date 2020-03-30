@@ -22,13 +22,16 @@ public class PedidoEstoque {
     @Column(nullable = false)
     private FormaDePagamento formaDePagamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "filial_id")
     private Filial filial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @OneToMany(
@@ -92,10 +95,6 @@ public class PedidoEstoque {
 
     public void setFormaDePagamento(FormaDePagamento formaDePagamento) {
         this.formaDePagamento = formaDePagamento;
-    }
-
-    public Set<ItensPedido> getItensPedido() {
-        return itensPedido;
     }
 
     public void setItensPedido(Set<ItensPedido> itensPedido) {

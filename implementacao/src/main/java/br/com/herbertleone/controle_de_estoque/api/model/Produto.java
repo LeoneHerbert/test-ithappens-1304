@@ -24,7 +24,7 @@ public class Produto {
 
     @NotNull
     @Column(unique = true)
-    private Integer codigoDeBarras;
+    private String codigoDeBarras;
 
     @NotEmpty
     @Column(unique = true)
@@ -34,10 +34,14 @@ public class Produto {
     @Column
     private BigDecimal valorUnitarioProduto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Estoque estoque;
+    @OneToMany(mappedBy = "id.produto", cascade = CascadeType.ALL)
+    private Set<Estoque> estoque = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "produto",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<ItensPedido> itensPedido = new LinkedHashSet<>();
 
 
@@ -57,14 +61,6 @@ public class Produto {
         this.sequencial = sequencial;
     }
 
-    public Integer getCodigoDeBarras() {
-        return codigoDeBarras;
-    }
-
-    public void setCodigoDeBarras(Integer codigoDeBarras) {
-        this.codigoDeBarras = codigoDeBarras;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -81,16 +77,6 @@ public class Produto {
         this.nome = nome;
     }
 
-
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
-
-
     public BigDecimal getValorUnitarioProduto() {
         return valorUnitarioProduto;
     }
@@ -99,11 +85,15 @@ public class Produto {
         this.valorUnitarioProduto = valorUnitarioProduto;
     }
 
-    public Set<ItensPedido> getItensPedido() {
-        return itensPedido;
+    public void setEstoque(Set<Estoque> estoque) {
+        this.estoque = estoque;
     }
 
-    public void setItensPedido(Set<ItensPedido> itensPedido) {
-        this.itensPedido = itensPedido;
+    public String getCodigoDeBarras() {
+        return codigoDeBarras;
+    }
+
+    public void setCodigoDeBarras(String codigoDeBarras) {
+        this.codigoDeBarras = codigoDeBarras;
     }
 }

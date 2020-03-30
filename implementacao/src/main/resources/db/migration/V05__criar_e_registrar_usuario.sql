@@ -6,3 +6,5 @@ CREATE TABLE usuario (
              senha varchar(50) NOT NULL,
              PRIMARY KEY (id)
 ) engine=InnoDB DEFAULT CHARSET=utf8;
+
+insert into usuario (nome, cpf, login, senha) values ("João","07969024324", "joaoadm", "adminadmin");
