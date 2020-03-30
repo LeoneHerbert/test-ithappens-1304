@@ -1,7 +1,5 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import br.com.herbertleone.controle_de_estoque.api.model.enums.FormaDePagamento;
-import br.com.herbertleone.controle_de_estoque.api.model.enums.TipoDoPedido;
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,6 +10,17 @@ public class PedidoEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
+    private String observacaoEntrega;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoDoPedido tipoDoPedido;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FormaDePagamento formaDePagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Filial filial;
@@ -28,17 +37,6 @@ public class PedidoEstoque {
             orphanRemoval = true
     )
     private Set<ItensPedido> itensPedido = new LinkedHashSet<>();
-
-    @Column(nullable = false)
-    private String observacaoEntrega;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoDoPedido tipoDoPedido;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private FormaDePagamento formaDePagamento;
 
     public Integer getId() {
         return id;

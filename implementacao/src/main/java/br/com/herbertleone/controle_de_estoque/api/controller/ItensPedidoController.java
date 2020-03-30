@@ -19,6 +19,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/itenspedido")
+@CrossOrigin
 public class ItensPedidoController {
     @Autowired
     private ApplicationEventPublisher publisher;

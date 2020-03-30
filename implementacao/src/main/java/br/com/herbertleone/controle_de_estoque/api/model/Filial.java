@@ -23,8 +23,8 @@ public class Filial {
     )
     private Set<PedidoEstoque> pedidosFilial = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "filial", cascade = CascadeType.ALL)
-    private Estoque estoque;
+    @OneToMany(mappedBy = "id.filial", cascade = CascadeType.ALL)
+    private Set<Estoque> estoque = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "filial", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Endereco endereco;
@@ -35,14 +35,6 @@ public class Filial {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
     }
 
     public Endereco getEndereco() {
@@ -67,5 +59,13 @@ public class Filial {
 
     public void setPedidosFilial(Set<PedidoEstoque> pedidosFilial) {
         this.pedidosFilial = pedidosFilial;
+    }
+
+    public Set<Estoque> getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Set<Estoque> estoque) {
+        this.estoque = estoque;
     }
 }

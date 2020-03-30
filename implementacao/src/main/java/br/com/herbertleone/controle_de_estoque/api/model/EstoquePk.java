@@ -1,9 +1,12 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
-public class EstoquePk {
+@Embeddable
+public class EstoquePk implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne

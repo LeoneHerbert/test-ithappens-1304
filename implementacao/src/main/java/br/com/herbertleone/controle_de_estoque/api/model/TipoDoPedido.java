@@ -1,4 +1,4 @@
-package br.com.herbertleone.controle_de_estoque.api.model.enums;
+package br.com.herbertleone.controle_de_estoque.api.model;
 
 public enum TipoDoPedido {
     SAIDA ("Venda"),

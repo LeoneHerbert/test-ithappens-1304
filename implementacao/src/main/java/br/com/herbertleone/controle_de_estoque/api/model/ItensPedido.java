@@ -1,6 +1,5 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import br.com.herbertleone.controle_de_estoque.api.model.enums.StatusItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -10,14 +9,10 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "itens_pedido")
-public class ItensPedido implements CalculoValorTotal {
+public class ItensPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
 
     @NotNull
     @Min(0)
@@ -28,12 +23,17 @@ public class ItensPedido implements CalculoValorTotal {
     @Column(nullable = false)
     private StatusItem statusItem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PedidoEstoque pedidoEstoque;
-
     @NotNull
     @Column
     private BigDecimal valorUnitarioItem;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_estoque_id")
+    private PedidoEstoque pedidoEstoque;
 
     @PrePersist
     private void prePersist() {
@@ -42,7 +42,7 @@ public class ItensPedido implements CalculoValorTotal {
 
     @Transient
     @JsonIgnore
-    public BigDecimal valorTotal(){
+    public BigDecimal valorTotalPedido(){
         BigDecimal valor = new BigDecimal(quantidade);
         return valorUnitarioItem.multiply(valor);
     }

@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/filiais")
+@CrossOrigin
 public class FilialController {
     @Autowired
     private ApplicationEventPublisher publisher;

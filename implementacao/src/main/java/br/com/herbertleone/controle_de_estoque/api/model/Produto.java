@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "produto")
@@ -36,7 +38,7 @@ public class Produto {
     private Estoque estoque;
 
     @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ItensPedido itensPedido;
+    private Set<ItensPedido> itensPedido = new LinkedHashSet<>();
 
 
     public Integer getId() {
@@ -88,13 +90,6 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    public ItensPedido getItensPedido() {
-        return itensPedido;
-    }
-
-    public void setItensPedido(ItensPedido itensPedido) {
-        this.itensPedido = itensPedido;
-    }
 
     public BigDecimal getValorUnitarioProduto() {
         return valorUnitarioProduto;
@@ -102,5 +97,13 @@ public class Produto {
 
     public void setValorUnitarioProduto(BigDecimal valorUnitarioProduto) {
         this.valorUnitarioProduto = valorUnitarioProduto;
+    }
+
+    public Set<ItensPedido> getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(Set<ItensPedido> itensPedido) {
+        this.itensPedido = itensPedido;
     }
 }

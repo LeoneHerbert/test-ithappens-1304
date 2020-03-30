@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/estoques")
+@CrossOrigin
 public class EstoqueController {
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -34,8 +35,6 @@ public class EstoqueController {
     @PostMapping
     public ResponseEntity<Estoque> cria(@Validated @RequestBody Estoque estoque, HttpServletResponse response) {
         Estoque estoqueSalvo = estoqueService.salva(estoque );
-
-        publisher.publishEvent(new HeaderLocationEvento(this, response, estoqueSalvo.getId()) );
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(estoqueSalvo );

@@ -6,10 +6,8 @@ CREATE TABLE pedido_estoque (
         filial_id INT,
         cliente_id INT,
         usuario_id INT,
-        estoque_id INT,
         FOREIGN KEY(filial_id) REFERENCES filial(id),
         FOREIGN KEY(cliente_id) REFERENCES cliente(id),
         FOREIGN KEY(usuario_id) REFERENCES usuario(id),
-        FOREIGN KEY(estoque_id) REFERENCES estoque(id),
         PRIMARY KEY(id)
 ) engine=InnoDB DEFAULT CHARSET=utf8;

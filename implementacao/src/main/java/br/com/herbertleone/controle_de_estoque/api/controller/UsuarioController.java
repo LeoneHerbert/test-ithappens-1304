@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin
 public class UsuarioController {
     @Autowired
     private ApplicationEventPublisher publisher;
