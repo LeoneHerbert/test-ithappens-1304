@@ -1,10 +1,9 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
-import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "estoque")
@@ -16,11 +15,13 @@ public class Estoque {
     @MapsId
     private Filial filial;
 
-    @OneToMany(mappedBy = "estoque", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Item> itens = new LinkedHashSet<>();
+    @NotNull
+    @Min(0)
+    @Column(name = "quantidade_estoque")
+    private Integer quantidadeProdutos;
 
-    @OneToMany(mappedBy = "estoque", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<PedidoEstoque> pedidosEstoque = new LinkedHashSet<>();
+    @ManyToOne
+    private Produto produto;
 
     public Integer getId() {
         return id;
@@ -30,11 +31,6 @@ public class Estoque {
         this.id = id;
     }
 
-    public Integer quantidade(){
-        return itens.stream()
-                .mapToInt(item -> item.getQuantidade())
-                .sum();
-    }
 
     public Filial getFilial() {
         return filial;
@@ -44,19 +40,31 @@ public class Estoque {
         this.filial = filial;
     }
 
-    public Set<Item> getItens() {
-        return itens;
+    public Integer getQuantidadeProdutos() {
+        return quantidadeProdutos;
     }
 
-    public void setItens(Set<Item> itens) {
-        this.itens = itens;
+    public void setQuantidadeProdutos(Integer quantidadeProdutos) {
+        this.quantidadeProdutos = quantidadeProdutos;
     }
 
-    public Set<PedidoEstoque> getPedidosEstoque() {
-        return pedidosEstoque;
+    public void baixaEstoque(@Positive Integer quantidade)  {
+        final int novaQuantidade = this.getQuantidadeProdutos() - quantidade;
+
+        if (novaQuantidade < 0) {
+            throw new IllegalArgumentException
+                    ("Não há disponibilidade no estoque de "
+                            + quantidade + " itens do produto " + produto.getNome() + "."
+                            + "Temos disponível apenas " + this.quantidadeProdutos + "itens" );
+        }
+        this.setQuantidadeProdutos(novaQuantidade );
     }
 
-    public void setPedidosEstoque(Set<PedidoEstoque> pedidosEstoque) {
-        this.pedidosEstoque = pedidosEstoque;
+    public void adicionaEstoque(@Min(1) Integer quantidade) {
+        this.setQuantidadeProdutos(this.getQuantidadeProdutos() + quantidade);
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

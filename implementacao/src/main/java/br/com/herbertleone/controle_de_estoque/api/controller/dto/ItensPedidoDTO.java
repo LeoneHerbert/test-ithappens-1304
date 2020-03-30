@@ -17,8 +17,8 @@ public class ItensPedidoDTO {
     @Size(min = 2, max = 50)
     private String nome;
 
-    @JsonProperty("itens")
-    private Set<ItemDTO> itensDTO = new LinkedHashSet<>();
+    @JsonProperty("produtos")
+    private Set<ProdutoDTO> produtosDTO = new LinkedHashSet<>();
 
     @NotNull
     private BigDecimal valorTotalDoPedido;
@@ -27,8 +27,8 @@ public class ItensPedidoDTO {
 
     public ItensPedidoDTO() {  }
 
-    public ItensPedidoDTO(ItensPedido itensPedido) {
-        this.comDadosDe(itensPedido );
+    public ItensPedidoDTO(ItensPedido produtosPedido) {
+        this.comDadosDe(produtosPedido );
     }
 
     public Integer getId() {
@@ -52,12 +52,12 @@ public class ItensPedidoDTO {
         return dto.getEntity(new ItensPedido() );
     }
 
-    public ItensPedidoDTO comDadosDe(ItensPedido itensPedido) {
-        return dto.comDadosDe(itensPedido );
+    public ItensPedidoDTO comDadosDe(ItensPedido produtosPedido) {
+        return dto.comDadosDe(produtosPedido );
     }
 
-    public ItensPedido atualizaIgnorandoNuloA(ItensPedido itensPedido) {
-        return dto.mergeIgnorandoNulo(itensPedido );
+    public ItensPedido atualizaIgnorandoNuloA(ItensPedido produtosPedido) {
+        return dto.mergeIgnorandoNulo(produtosPedido );
     }
 
 
@@ -66,7 +66,7 @@ public class ItensPedidoDTO {
         return "ItensPedidoDTO{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", produtos='" + itensDTO.toString() + '\'' +
+                ", produtos='" + produtosDTO.toString() + '\'' +
                 '}';
     }
 

@@ -20,7 +20,7 @@ public class EstoqueDTO {
     private FilialDTO filialDTO;
 
     @JsonProperty("item")
-    private Set<ItemDTO> itensDTO = new LinkedHashSet<>();
+    private Set<ProdutoDTO> produtosDTO = new LinkedHashSet<>();
 
     private DTO<Estoque, EstoqueDTO> dto = new DTO<>(this);
 
@@ -67,12 +67,12 @@ public class EstoqueDTO {
         this.filialDTO = filialDTO;
     }
 
-    public Set<ItemDTO> getItemDTO() {
-        return itensDTO;
+    public Set<ProdutoDTO> getItemDTO() {
+        return produtosDTO;
     }
 
-    public void setItemDTO(Set<ItemDTO> itemDTO) {
-        this.itensDTO = itemDTO;
+    public void setItemDTO(Set<ProdutoDTO> itemDTO) {
+        this.produtosDTO = itemDTO;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class EstoqueDTO {
         return "EstoqueDTO{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", itens='" + itensDTO.toString() + '\'' +
+                ", produtos='" + produtosDTO.toString() + '\'' +
                 '}';
     }
 }

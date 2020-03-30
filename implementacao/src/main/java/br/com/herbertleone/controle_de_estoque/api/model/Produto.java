@@ -3,7 +3,7 @@ package br.com.herbertleone.controle_de_estoque.api.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produto")
@@ -28,9 +28,16 @@ public class Produto {
     @Column(unique = true)
     private String descricao;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item item;
+    @NotNull
+    @Column
+    private BigDecimal valorUnitario;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Estoque estoque;
+
+    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ItensPedido itensPedido;
+
 
     public Integer getId() {
         return id;
@@ -64,19 +71,36 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public ItensPedido getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(ItensPedido itensPedido) {
+        this.itensPedido = itensPedido;
+    }
+
+    public BigDecimal getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(BigDecimal valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 }

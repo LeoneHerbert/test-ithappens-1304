@@ -2,9 +2,9 @@ package br.com.herbertleone.controle_de_estoque.api.model;
 
 import br.com.herbertleone.controle_de_estoque.api.model.enums.FormaDePagamento;
 import br.com.herbertleone.controle_de_estoque.api.model.enums.TipoDoPedido;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pedido_estoque")
@@ -22,10 +22,12 @@ public class PedidoEstoque {
     @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "itens_pedido_id", nullable = false )
-    private ItensPedido itensPedido;
+    @OneToMany(
+            mappedBy = "pedidoEstoque",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<ItensPedido> itensPedido = new LinkedHashSet<>();
 
     @Column(nullable = false)
     private String observacaoEntrega;
@@ -37,9 +39,6 @@ public class PedidoEstoque {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FormaDePagamento formaDePagamento;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Estoque estoque;
 
     public Integer getId() {
         return id;
@@ -97,19 +96,11 @@ public class PedidoEstoque {
         this.formaDePagamento = formaDePagamento;
     }
 
-    public ItensPedido getItensPedido() {
+    public Set<ItensPedido> getItensPedido() {
         return itensPedido;
     }
 
-    public void setItensPedido(ItensPedido itensPedido) {
+    public void setItensPedido(Set<ItensPedido> itensPedido) {
         this.itensPedido = itensPedido;
-    }
-
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
     }
 }

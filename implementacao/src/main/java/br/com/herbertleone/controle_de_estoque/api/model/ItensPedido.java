@@ -1,6 +1,11 @@
 package br.com.herbertleone.controle_de_estoque.api.model;
 
+import br.com.herbertleone.controle_de_estoque.api.model.enums.StatusItem;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,15 +17,25 @@ public class ItensPedido implements CalculoValorTotal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(
-            mappedBy = "itensPedido",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Item> itens = new LinkedHashSet<>();
+    @ManyToOne
+    private Produto produto;
 
-    @OneToOne(mappedBy = "itensPedido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @NotNull
+    @Min(0)
+    @Column
+    private Integer quantidade;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusItem statusItem;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private PedidoEstoque pedidoEstoque;
+
+    public BigDecimal valorTotal(){
+        BigDecimal valor = new BigDecimal(quantidade);
+        return produto.getValorUnitario().multiply(valor);
+    }
 
     public Integer getId() {
         return id;
@@ -30,18 +45,11 @@ public class ItensPedido implements CalculoValorTotal {
         this.id = id;
     }
 
-    public Set<Item> getItens() {
-        return itens;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setItens(Set<Item> itens) {
-        this.itens = itens;
-    }
-
-    @Override
-    public BigDecimal valorTotal(){
-        return itens.stream()
-                .map(Item::getValorUnitario)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

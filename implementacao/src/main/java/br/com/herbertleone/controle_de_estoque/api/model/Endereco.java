@@ -13,16 +13,22 @@ public class Endereco {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 100, nullable = false)
     private String logradouro;
 
+    @Column(length = 10, nullable = false)
     private String numero;
 
+    @Column(length = 100, nullable = false)
     private String complemento;
 
+    @Column(length = 30, nullable = false)
     private String cidade;
 
+    @Column(length = 2, nullable = false)
     private String uf;
 
+    @Column(length = 8, nullable = false)
     private String cep;
 
     @JsonIgnore
